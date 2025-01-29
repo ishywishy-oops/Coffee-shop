@@ -1,0 +1,36 @@
+
+// Function to add items to cart
+function addToCart(item, price) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push({ item, price });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(item + " added to cart!");
+}
+
+// Function to display cart items
+function displayCart() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cartItems = document.getElementById("cart-items");
+    let total = 0;
+
+    cartItems.innerHTML = "";
+    cart.forEach((cartItem, index) => {
+        total += cartItem.price;
+        let li = document.createElement("li");
+        li.textContent = `${cartItem.item} - $${cartItem.price.toFixed(2)}`;
+        cartItems.appendChild(li);
+    });
+
+    document.getElementById("cart-total").textContent = total.toFixed(2);
+}
+
+// Function to clear the cart
+function clearCart() {
+    localStorage.removeItem("cart");
+    displayCart();
+}
+
+// Display cart when on cart page
+if (document.getElementById("cart-items")) {
+    displayCart();
+}
